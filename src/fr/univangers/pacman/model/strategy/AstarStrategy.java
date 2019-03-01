@@ -3,6 +3,7 @@ package fr.univangers.pacman.model.strategy;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -138,7 +139,7 @@ public abstract class AstarStrategy implements Strategy {
     		return 1;
     }
     
-    private int compare(PositionAgent p1, PositionAgent p2) {
+    private int compare2(PositionAgent p1, PositionAgent p2) {
     	int compare = compareFScore(p1, p2);
     	if(compare == 0)
     		compare = compareGScore(p1, p2);
@@ -146,7 +147,12 @@ public abstract class AstarStrategy implements Strategy {
     }
 
     protected Map.Entry<Double, PositionAgent> findPath(PositionAgent start, List<PositionAgent> goals, List<PositionAgent> friends, List<PositionAgent> enemies, boolean[][] walls) {    	
-        PriorityQueue<PositionAgent> openList = new PriorityQueue<>((p1, p2) -> compare(p1, p2));
+        PriorityQueue<PositionAgent> openList = new PriorityQueue<PositionAgent>( 
+        		new Comparator<PositionAgent>() {
+        			public int compare(PositionAgent p1, PositionAgent p2) {
+        				return compare2(p1, p2);
+        			}
+        		});
         List<PositionAgent> closedList = new ArrayList<>();
         
         Map<PositionAgent, PositionAgent> cameFrom = new HashMap<>();

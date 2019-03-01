@@ -6,7 +6,7 @@ import java.util.Objects;
 /**
  * La classe PositionAgent represente la position d'un agent et sa direction
  */
-public class PositionAgent implements Serializable {
+public class PositionAgent extends Object implements Serializable{
 
 	private static final long serialVersionUID = -2240234555555290641L;
 
