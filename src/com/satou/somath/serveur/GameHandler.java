@@ -7,8 +7,6 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 
-import com.satou.somath.client.Recive;
-
 import fr.univangers.pacman.model.Game;
 
 public class GameHandler extends Thread {
@@ -59,7 +57,7 @@ public class GameHandler extends Thread {
          */
         sortie.println( "game" );
         sortie.flush();
-        Thread recevoir = new Thread( new Recive( _so, entree, sortie ) );
+        Thread recevoir = new Thread( new ReciveServeur( _so, entree, sortie ) );
         recevoir.start();
         while ( !_so.isClosed() ) {
 
