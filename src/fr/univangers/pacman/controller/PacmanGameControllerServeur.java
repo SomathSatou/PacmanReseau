@@ -12,7 +12,7 @@ import fr.univangers.pacman.model.PositionAgent.Dir;
  * relancer la partie depuis le début ou avancer d'un tour et de contrôler le
  * joueur
  */
-public class PacmanGameController implements GameController {
+public class PacmanGameControllerServeur implements GameController {
 
     private static final long serialVersionUID = 7744355889303690019L;
     private PacmanGame        pacmanGame;
@@ -22,11 +22,11 @@ public class PacmanGameController implements GameController {
      * 
      * @param pacmanGame
      */
-    public PacmanGameController( PacmanGame pacmanGame ) {
+    public PacmanGameControllerServeur( PacmanGame pacmanGame ) {
         this.pacmanGame = pacmanGame;
     }
 
-    public PacmanGameController( PacmanGame pacmanGame, PrintWriter sortie ) {
+    public PacmanGameControllerServeur( PacmanGame pacmanGame, PrintWriter sortie ) {
         this.pacmanGame = pacmanGame;
         this.sortie = sortie;
     }
@@ -69,7 +69,6 @@ public class PacmanGameController implements GameController {
     @Override
     public void send( String mes ) {
         // TODO Auto-generated method stub
-        System.out.println( "fct send lancer" );
         sortie.println( mes );
         sortie.flush();
     }

@@ -18,6 +18,7 @@ import fr.univangers.pacman.controller.GameController;
 import fr.univangers.pacman.model.Game;
 import fr.univangers.pacman.model.Maze;
 import fr.univangers.pacman.model.PacmanGame;
+import fr.univangers.pacman.model.PositionAgent.Dir;
 
 /**
  * Classe ViewGame permet d'afficher le jeu dans une interface graphique
@@ -129,19 +130,19 @@ public class ViewGame extends JFrame implements View, KeyListener {
             // gameController.movePlayer1( Dir.EAST );
             break;
         case KeyEvent.VK_Q:
-            // gameController.movePlayer2( Dir.WEST );
+            gameController.movePlayer2( Dir.WEST );
             break;
         case KeyEvent.VK_Z:
-            // gameController.movePlayer2( Dir.NORTH );
+            gameController.movePlayer2( Dir.NORTH );
             break;
         case KeyEvent.VK_S:
-            // gameController.movePlayer2( Dir.SOUTH );
+            gameController.movePlayer2( Dir.SOUTH );
             break;
         case KeyEvent.VK_D:
-            // gameController.movePlayer2( Dir.EAST );
+            gameController.movePlayer2( Dir.EAST );
             break;
         case KeyEvent.VK_P:
-            // gameController.pause();
+            gameController.pause();
             break;
         default:
             break;

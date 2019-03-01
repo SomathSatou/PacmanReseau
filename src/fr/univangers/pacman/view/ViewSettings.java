@@ -46,6 +46,106 @@ public class ViewSettings extends JFrame {
     private JComboBox<String> listStrategyPacman;
     private JComboBox<String> listStrategyGhost;
 
+    public ViewSettings() {
+        super();
+
+        setTitle( "Configuration" );
+        setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
+        setLayout( new BorderLayout() );
+
+        panel = new JPanel();
+        panel.setLayout( new GridLayout( 6, 2, 10, 10 ) );
+        panel.setBorder( BorderFactory.createEmptyBorder( 10, 10, 10, 10 ) );
+
+        // Liste Maze
+        File directory = new File( "res/layouts" );
+        listMaze = new JComboBox<>( directory.listFiles() );
+        listMaze.addActionListener( new ActionListener() {
+            @Override
+            public void actionPerformed( ActionEvent arg0 ) {
+                updateMaze( (File) listMaze.getSelectedItem() );
+            }
+        } );
+        panel.add( new JLabel( "Choix labyrinthe :" ) );
+        panel.add( listMaze );
+
+        try {
+            maze = new Maze( directory.listFiles()[0].toString() );
+            panelPreview = new PanelPacmanGame( maze );
+            setSize( new Dimension( maze.getSizeX() * 20, maze.getSizeY() * 20 + 200 ) );
+            centerView();
+        } catch ( Exception e ) {
+        }
+
+        // Liste Mode
+        listMode = new JComboBox<>();
+        updateMode();
+        panel.add( new JLabel( "Mode de jeu :" ) );
+        panel.add( listMode );
+
+        // Liste Nombre de tours
+        nbTurn = new JSpinner( new SpinnerNumberModel( 250, 1, 999, 1 ) );
+        panel.add( new JLabel( "Nombre de tour :" ) );
+        panel.add( nbTurn );
+
+        // Liste Stratégie pacman
+        listStrategyPacman = new JComboBox<>();
+        updateStrategyPacman();
+        panel.add( new JLabel( "Strategie pacman :" ) );
+        panel.add( listStrategyPacman );
+
+        // Liste Stratégie fantôme
+        listStrategyGhost = new JComboBox<>();
+        updateStrategyGhost();
+        panel.add( new JLabel( "Stratégie fantôme :" ) );
+        panel.add( listStrategyGhost );
+
+        JButton buttonLaunch = new JButton( "Lancer" );
+        buttonLaunch.addActionListener( new ActionListener() {
+            public void actionPerformed( ActionEvent event ) {
+                /**
+                 * modifier pour que le lancement ce fasse sur le serveur.
+                 */
+                PacmanGame pacmanGame = new PacmanGame( getNbTurn(), getMaze(), getStrategyPacman(), getStrategyGhost(),
+                        getMode() );
+                PacmanGameController pacmanGameController = new PacmanGameController( pacmanGame );
+                /**
+                 * rajout méthode d'envoie des donnée d'initialisation coté
+                 * serveur sendInitCS( getNbTurn(),
+                 * ((File)listMaze.getSelectedItem() ).getPath() ,
+                 * listStrategyGhost.getSelectedIndex() ,
+                 * listStrategyPacman.getSelectedIndex() ,
+                 * listMode.getSelectedIndex() )
+                 */
+                ViewCommande viewCommande = new ViewCommande( pacmanGame );
+                viewCommande.setGameController( pacmanGameController );
+                new ViewGame( pacmanGame, pacmanGameController, getMaze() );
+                setVisible( false );
+            }
+        } );
+        panel.add( buttonLaunch );
+
+        JButton buttonClose = new JButton( "Fermer" );
+        buttonClose.addActionListener( new ActionListener() {
+            public void actionPerformed( ActionEvent event ) {
+                System.exit( 0 );
+            }
+        } );
+        panel.add( buttonClose );
+
+        JLabel labelPreview = new JLabel( "Menu" );
+        labelPreview.setFont( new Font( Font.SANS_SERIF, Font.PLAIN, 25 ) );
+        labelPreview.setHorizontalAlignment( (int) JLabel.CENTER_ALIGNMENT );
+        ;
+        add( labelPreview, BorderLayout.PAGE_START );
+
+        add( panelPreview, BorderLayout.CENTER );
+
+        add( panel, BorderLayout.PAGE_END );
+
+        setVisible( true );
+    }
+
     public ViewSettings( PrintWriter sortie ) {
         super();
 

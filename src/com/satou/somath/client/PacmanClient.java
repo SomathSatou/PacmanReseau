@@ -8,21 +8,12 @@ import java.net.Socket;
 import java.util.Scanner;
 
 public class PacmanClient {
-    static String INPUT_UP       = "inputs up";
-    static String INPUT_DOWN     = "inputs down";
-    static String INPUT_RIGHT    = "inputs right";
-    static String INPUT_LEFT     = "inputs left";
-    static String commandeEnvoie = "rien";
+    static String  INPUT_UP    = "inputs up";
+    static String  INPUT_DOWN  = "inputs down";
+    static String  INPUT_RIGHT = "inputs right";
+    static String  INPUT_LEFT  = "inputs left";
 
-    public String getCommandeEnvoie() {
-        return commandeEnvoie;
-    }
-
-    public void setCommandeEnvoie( String commandeEnvoie ) {
-        this.commandeEnvoie = commandeEnvoie;
-    }
-
-    static boolean isRunning = true;
+    static boolean isRunning   = true;
 
     public static void isNotRunning() {
         isRunning = false;
@@ -56,34 +47,23 @@ public class PacmanClient {
                         sortie.println( msg );
                         sortie.flush();
 
-                        switch ( commandeEnvoie ) {
-                        case "bas":
-                            sortie.println( INPUT_DOWN );
-                            sortie.flush();
-                            break;
-                        case "haut":
-                            sortie.println( INPUT_UP );
-                            sortie.flush();
-                            break;
-                        case "gauche":
-                            sortie.println( INPUT_LEFT );
-                            sortie.flush();
-                            break;
-                        case "droite":
-                            sortie.println( INPUT_RIGHT );
-                            sortie.flush();
-                            break;
-                        default:
-                            break;
-
-                        }
+                        /*
+                         * switch ( msg ) { case "bas": sortie.println(
+                         * INPUT_DOWN ); sortie.flush(); break; case "haut":
+                         * sortie.println( INPUT_UP ); sortie.flush(); break;
+                         * case "gauche": sortie.println( INPUT_LEFT );
+                         * sortie.flush(); break; case "droite": sortie.println(
+                         * INPUT_RIGHT ); sortie.flush(); break; default: break;
+                         * 
+                         * }
+                         */
                     }
                 }
             } );
 
             envoi.start();
 
-            Thread recevoir = new Thread( new Recive( so, entree, sortie, sc ) );
+            Thread recevoir = new Thread( new Recive( so, entree, sortie ) );
             recevoir.start();
             /*
              * while(isRunning){ // tentative pour fermer correctement le client
@@ -91,6 +71,7 @@ public class PacmanClient {
              * } System.out.println("je n'attends plus"); recevoir.stop();
              * envoi.stop();
              */
+
         } catch (
 
         IOException e ) {
