@@ -8,6 +8,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 import fr.univangers.pacman.model.Game;
+import fr.univangers.pacman.model.PositionAgent;
 
 public class GameHandler extends Thread {
 
@@ -84,6 +85,31 @@ public class GameHandler extends Thread {
 
     public void set_so( Socket _so ) {
         this._so = _so;
+    }
+
+    public void testMove( PositionAgent.Dir dir ) {
+        switch ( dir ) {
+        case NORTH:
+            System.out.println( "dir nord" );
+            // appeler la methode move sur le jeu
+            break;
+        case SOUTH:
+            System.out.println( "dir sud" );
+            // appeler la methode move sur le jeu
+            break;
+        case EAST:
+            System.out.println( "dir est" );
+            // appeler la methode move sur le jeu
+            break;
+        case WEST:
+            System.out.println( "dir ouest" );
+            // appeler la methode move sur le jeu
+            break;
+        default:
+            System.out.println( "erreur" );
+            break;
+
+        }
     }
 
 }

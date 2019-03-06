@@ -36,7 +36,7 @@ public class ViewGame extends JFrame implements View, KeyListener {
     private PanelPacmanGame   panelPacmanGame;
     private boolean           reset;
 
-    public ViewGame( Game game, GameController gameController, Maze maze ) {
+    public ViewGame( Game game, GameController gameController, Maze maze, String title ) {
         super();
         this.game = game;
         this.game.addView( this );
@@ -45,7 +45,7 @@ public class ViewGame extends JFrame implements View, KeyListener {
 
         addKeyListener( this );
 
-        setTitle( "Pacman" );
+        setTitle( title );
         setSize( new Dimension( maze.getSizeX() * 20, maze.getSizeY() * 20 + 80 ) );
         setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
         setLayout( new BorderLayout() );
@@ -126,7 +126,7 @@ public class ViewGame extends JFrame implements View, KeyListener {
             // gameController.movePlayer1( Dir.SOUTH );
             break;
         case KeyEvent.VK_RIGHT:
-            gameController.send( "droit" );
+            gameController.send( "droite" );
             // gameController.movePlayer1( Dir.EAST );
             break;
         case KeyEvent.VK_Q:

@@ -119,7 +119,7 @@ public class ViewSettings extends JFrame {
                  */
                 ViewCommande viewCommande = new ViewCommande( pacmanGame );
                 viewCommande.setGameController( pacmanGameController );
-                new ViewGame( pacmanGame, pacmanGameController, getMaze() );
+                new ViewGame( pacmanGame, pacmanGameController, getMaze(), "Pacman" );
                 setVisible( false );
             }
         } );
@@ -219,7 +219,9 @@ public class ViewSettings extends JFrame {
                  */
                 ViewCommande viewCommande = new ViewCommande( pacmanGame );
                 viewCommande.setGameController( pacmanGameController );
-                new ViewGame( pacmanGame, pacmanGameController, getMaze() );
+                new ViewGame( pacmanGame, pacmanGameController, getMaze(), "Pacman" );
+                sortie.println( "game" );
+                sortie.flush();
                 setVisible( false );
             }
         } );
