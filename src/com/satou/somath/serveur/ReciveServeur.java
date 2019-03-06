@@ -6,12 +6,13 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.StringTokenizer;
 
+import com.satou.somath.definition.Mode;
+import com.satou.somath.definition.StrategyGhost;
+import com.satou.somath.definition.StrategyPacman;
+
 import fr.univangers.pacman.controller.PacmanGameController;
 import fr.univangers.pacman.model.Maze;
 import fr.univangers.pacman.model.PacmanGame;
-import fr.univangers.pacman.model.PacmanGame.Mode;
-import fr.univangers.pacman.model.PacmanGame.StrategyGhost;
-import fr.univangers.pacman.model.PacmanGame.StrategyPacman;
 import fr.univangers.pacman.model.PositionAgent.Dir;
 import fr.univangers.pacman.view.ViewGame;
 

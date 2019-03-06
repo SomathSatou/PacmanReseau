@@ -14,6 +14,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import com.satou.somath.definition.Winner;
+
 import fr.univangers.pacman.controller.GameController;
 import fr.univangers.pacman.model.Game;
 import fr.univangers.pacman.model.Maze;
@@ -87,12 +89,12 @@ public class ViewGame extends JFrame implements View, KeyListener {
             panelPacmanGame.setPacmans_pos( ( (PacmanGame) game ).positionPacmans() );
             panelPacmanGame.setGhosts_pos( ( (PacmanGame) game ).positionGhosts() );
 
-            PacmanGame.Winner winner = ( (PacmanGame) game ).winner();
-            if ( !reset && winner != PacmanGame.Winner.NOWINNER ) {
+            Winner winner = ( (PacmanGame) game ).winner();
+            if ( !reset && winner != Winner.NOWINNER ) {
                 String print = "";
-                if ( winner == PacmanGame.Winner.PACMANWINNER ) {
+                if ( winner == Winner.PACMANWINNER ) {
                     print = "Les pacmans ont gagné";
-                } else if ( winner == PacmanGame.Winner.GHOSTWINNER ) {
+                } else if ( winner == Winner.GHOSTWINNER ) {
                     print = "Les fantômes ont gagné";
                 }
                 int answer = JOptionPane.showConfirmDialog( this,

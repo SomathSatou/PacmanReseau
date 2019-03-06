@@ -21,13 +21,15 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 
+import com.satou.somath.definition.Mode;
+import com.satou.somath.definition.StrategyGhost;
+import com.satou.somath.definition.StrategyPacman;
+
 import fr.univangers.pacman.controller.PacmanGameController;
 import fr.univangers.pacman.controller.PacmanGameControllerClient;
 import fr.univangers.pacman.model.Maze;
 import fr.univangers.pacman.model.PacmanGame;
-import fr.univangers.pacman.model.PacmanGame.Mode;
-import fr.univangers.pacman.model.PacmanGame.StrategyGhost;
-import fr.univangers.pacman.model.PacmanGame.StrategyPacman;
+import fr.univangers.pacman.model.PacmanGameClient;
 
 /**
  * Interface qui permet de sélectionner le labyrinthe ainsi que les paramètres
@@ -207,7 +209,8 @@ public class ViewSettings extends JFrame {
                 /**
                  * modifier pour que le lancement ce fasse sur le serveur.
                  */
-                PacmanGame pacmanGame = new PacmanGame( getNbTurn(), getMaze(), getStrategyPacman(), getStrategyGhost(),
+                PacmanGameClient pacmanGame = new PacmanGameClient( getNbTurn(), getMaze(), getStrategyPacman(),
+                        getStrategyGhost(),
                         getMode() );
                 PacmanGameControllerClient pacmanGameController = new PacmanGameControllerClient( pacmanGame, sortie );
                 /**

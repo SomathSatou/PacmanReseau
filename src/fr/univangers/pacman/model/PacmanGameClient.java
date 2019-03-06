@@ -22,7 +22,7 @@ import fr.univangers.pacman.model.PositionAgent.Dir;
  * différents scores et agents ainsi que leur position
  */
 
-public class PacmanGame extends Game {
+public class PacmanGameClient extends Game {
 
     private static final long   serialVersionUID = 998416452804755455L;
     private static final int    nbVieMax         = 3;
@@ -94,12 +94,15 @@ public class PacmanGame extends Game {
         return ghostsScarred;
     }
 
-    public PacmanGame( int maxTurn, Maze maze, StrategyPacman strategyPacman, StrategyGhost strategyGhost, Mode mode ) {
+    public PacmanGameClient( int maxTurn, Maze maze,
+            StrategyPacman strategyPacman2,
+            StrategyGhost strategyGhost2,
+            Mode mode2 ) {
         super( maxTurn );
         this.maze = maze;
-        this.strategyPacman = strategyPacman;
-        this.strategyGhost = strategyGhost;
-        this.mode = mode;
+        this.strategyPacman = strategyPacman2;
+        this.strategyGhost = strategyGhost2;
+        this.mode = mode2;
         this.winner = Winner.NOWINNER;
         this.nbLifePacmans = nbVieMax;
         init();
@@ -287,42 +290,9 @@ public class PacmanGame extends Game {
      */
 
     public void takeTurn() {
-        /**
-         * il y a des choses a faire ici
-         */
-        for ( Agent pacman : pacmans ) {
-            moveAgent( pacman );
-            deadAgents( pacman );
-            if ( maze.isFoods( pacman.position().getX(), pacman.position().getY() ) ) {
-                maze.setFoods( pacman.position().getX(), pacman.position().getY(), false );
-                score += 10;
-                nbFood--;
-                playSound( "res/sounds/pacman_chomp.wav" );
-            }
-            if ( maze.isCapsule( pacman.position().getX(), pacman.position().getY() ) ) {
-                maze.setCapsule( pacman.position().getX(), pacman.position().getY(), false );
-                for ( Agent ghost : ghosts ) {
-                    ghost.vulnerability();
-                }
-                score += 50;
-                nbFood--;
-                playSound( "res/sounds/pacman_extrapac.wav" );
-            }
-        }
 
         updatePosition();
 
-        for ( Agent ghost : ghosts ) {
-            moveAgent( ghost );
-            deadAgents( ghost );
-        }
-        isOver();
-
-        updatePosition();
-        /**
-         * rajouter un update serveur qui mets a jour en fonction de ce cas
-         * reçus le serveur
-         */
     }
 
     @Override
