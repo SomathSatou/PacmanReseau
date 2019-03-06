@@ -22,6 +22,7 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 
 import fr.univangers.pacman.controller.PacmanGameController;
+import fr.univangers.pacman.controller.PacmanGameControllerClient;
 import fr.univangers.pacman.model.Maze;
 import fr.univangers.pacman.model.PacmanGame;
 import fr.univangers.pacman.model.PacmanGame.Mode;
@@ -208,7 +209,7 @@ public class ViewSettings extends JFrame {
                  */
                 PacmanGame pacmanGame = new PacmanGame( getNbTurn(), getMaze(), getStrategyPacman(), getStrategyGhost(),
                         getMode() );
-                PacmanGameController pacmanGameController = new PacmanGameController( pacmanGame, sortie );
+                PacmanGameControllerClient pacmanGameController = new PacmanGameControllerClient( pacmanGame, sortie );
                 /**
                  * rajout méthode d'envoie des donnée d'initialisation coté
                  * serveur sendInitCS( getNbTurn(),

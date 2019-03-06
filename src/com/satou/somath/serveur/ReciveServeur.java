@@ -13,7 +13,6 @@ import fr.univangers.pacman.model.PacmanGame.Mode;
 import fr.univangers.pacman.model.PacmanGame.StrategyGhost;
 import fr.univangers.pacman.model.PacmanGame.StrategyPacman;
 import fr.univangers.pacman.model.PositionAgent.Dir;
-import fr.univangers.pacman.view.ViewCommande;
 import fr.univangers.pacman.view.ViewGame;
 
 public class ReciveServeur implements Runnable {
@@ -70,8 +69,6 @@ public class ReciveServeur implements Runnable {
                      * listStrategyPacman.getSelectedIndex() ,
                      * listMode.getSelectedIndex() )
                      */
-                    ViewCommande viewCommande = new ViewCommande( pacmanGame );
-                    viewCommande.setGameController( pacmanGameController );
                     new ViewGame( pacmanGame, pacmanGameController,
                             new Maze( directory.listFiles()[0].toString() ), "PacmanServeur" );
                     break;
@@ -90,6 +87,27 @@ public class ReciveServeur implements Runnable {
 
                 case "bas":
                     pacmanGame.movePacmanPlayer1( Dir.SOUTH );
+                    break;
+
+                case "time":
+                    pacmanGame.setTime( Integer.parseInt( st.nextToken() ) );
+                    break;
+
+                case "stop":
+                    pacmanGame.stop();
+                    break;
+
+                case "restart":
+                    pacmanGame.init();
+                    break;
+
+                case "launch":
+                    pacmanGame.launch();
+                    break;
+
+                case "step":
+
+                    pacmanGame.step();
                     break;
 
                 default:

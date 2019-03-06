@@ -34,26 +34,36 @@ public class PacmanGameControllerClient implements GameController {
     @Override
     public void setTime( int time ) {
         pacmanGame.setTime( time );
+        sortie.println( "time " + time );
+        sortie.flush();
     }
 
     @Override
     public void pause() {
         pacmanGame.stop();
+        sortie.println( "stop" );
+        sortie.flush();
     }
 
     @Override
     public void restart() {
         pacmanGame.init();
+        sortie.println( "restart" );
+        sortie.flush();
     }
 
     @Override
     public void run() {
         pacmanGame.launch();
+        sortie.println( "launch" );
+        sortie.flush();
     }
 
     @Override
     public void step() {
         pacmanGame.step();
+        sortie.println( "step" );
+        sortie.flush();
     }
 
     @Override
