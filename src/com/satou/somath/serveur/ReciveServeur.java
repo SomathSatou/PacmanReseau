@@ -10,9 +10,9 @@ import com.satou.somath.definition.Mode;
 import com.satou.somath.definition.StrategyGhost;
 import com.satou.somath.definition.StrategyPacman;
 
-import fr.univangers.pacman.controller.PacmanGameController;
+import fr.univangers.pacman.controller.PacmanGameControllerServeur;
 import fr.univangers.pacman.model.Maze;
-import fr.univangers.pacman.model.PacmanGame;
+import fr.univangers.pacman.model.PacmanGameServeur;
 import fr.univangers.pacman.model.PositionAgent.Dir;
 import fr.univangers.pacman.view.ViewGame;
 
@@ -34,11 +34,11 @@ public class ReciveServeur implements Runnable {
     public void run() {
         // TODO Auto-generated method stub
         File directory = new File( "res/layouts" );
-        PacmanGame pacmanGame;
+        PacmanGameServeur pacmanGame;
         try {
-            pacmanGame = new PacmanGame( 200, new Maze( directory.listFiles()[0].toString() ),
+            pacmanGame = new PacmanGameServeur( 200, new Maze( directory.listFiles()[0].toString() ),
                     StrategyPacman.BASIC, StrategyGhost.TRACKING,
-                    Mode.ONEPLAYER );
+                    Mode.ONEPLAYER, sortie );
 
             while ( so.isConnected() ) {
                 msg = entree.readLine();
@@ -61,7 +61,8 @@ public class ReciveServeur implements Runnable {
                      * Mode.ONEPLAYER );
                      */
 
-                    PacmanGameController pacmanGameController = new PacmanGameController( pacmanGame, sortie );
+                    PacmanGameControllerServeur pacmanGameController = new PacmanGameControllerServeur( pacmanGame,
+                            sortie );
                     /**
                      * rajout méthode d'envoie des donnée d'initialisation coté
                      * serveur sendInitCS( getNbTurn(),
@@ -107,7 +108,6 @@ public class ReciveServeur implements Runnable {
                     break;
 
                 case "step":
-
                     pacmanGame.step();
                     break;
 

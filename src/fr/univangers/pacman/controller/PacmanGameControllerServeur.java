@@ -2,7 +2,7 @@ package fr.univangers.pacman.controller;
 
 import java.io.PrintWriter;
 
-import fr.univangers.pacman.model.PacmanGame;
+import fr.univangers.pacman.model.PacmanGameServeur;
 import fr.univangers.pacman.model.PositionAgent.Dir;
 
 /**
@@ -15,18 +15,18 @@ import fr.univangers.pacman.model.PositionAgent.Dir;
 public class PacmanGameControllerServeur implements GameController {
 
     private static final long serialVersionUID = 7744355889303690019L;
-    private PacmanGame        pacmanGame;
+    private PacmanGameServeur pacmanGame;
     private PrintWriter       sortie;
 
     /**
      * 
      * @param pacmanGame
      */
-    public PacmanGameControllerServeur( PacmanGame pacmanGame ) {
+    public PacmanGameControllerServeur( PacmanGameServeur pacmanGame ) {
         this.pacmanGame = pacmanGame;
     }
 
-    public PacmanGameControllerServeur( PacmanGame pacmanGame, PrintWriter sortie ) {
+    public PacmanGameControllerServeur( PacmanGameServeur pacmanGame, PrintWriter sortie ) {
         this.pacmanGame = pacmanGame;
         this.sortie = sortie;
     }

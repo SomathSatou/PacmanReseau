@@ -20,6 +20,8 @@ import fr.univangers.pacman.controller.GameController;
 import fr.univangers.pacman.model.Game;
 import fr.univangers.pacman.model.Maze;
 import fr.univangers.pacman.model.PacmanGame;
+import fr.univangers.pacman.model.PacmanGameClient;
+import fr.univangers.pacman.model.PacmanGameServeur;
 import fr.univangers.pacman.model.PositionAgent.Dir;
 
 /**
@@ -70,6 +72,20 @@ public class ViewGame extends JFrame implements View, KeyListener {
             labelScore = new JLabel( "Score " + ( (PacmanGame) game ).score(), SwingConstants.CENTER );
             panelInfo.add( labelScore );
         }
+
+        if ( game instanceof PacmanGameClient ) {
+            labelLife = new JLabel( "Vie " + ( (PacmanGameClient) game ).getNbLifePacmans(), SwingConstants.CENTER );
+            panelInfo.add( labelLife );
+            labelScore = new JLabel( "Score " + ( (PacmanGameClient) game ).score(), SwingConstants.CENTER );
+            panelInfo.add( labelScore );
+        }
+
+        if ( game instanceof PacmanGameServeur ) {
+            labelLife = new JLabel( "Vie " + ( (PacmanGameServeur) game ).getNbLifePacmans(), SwingConstants.CENTER );
+            panelInfo.add( labelLife );
+            labelScore = new JLabel( "Score " + ( (PacmanGameServeur) game ).score(), SwingConstants.CENTER );
+            panelInfo.add( labelScore );
+        }
         add( panelInfo, BorderLayout.NORTH );
 
         panelPacmanGame = new PanelPacmanGame( maze );
@@ -82,6 +98,7 @@ public class ViewGame extends JFrame implements View, KeyListener {
     public void update() {
 
         labelCurrentTurn.setText( "Tour " + game.nbTurn() );
+
         if ( game instanceof PacmanGame ) {
             labelLife.setText( "Vie " + ( (PacmanGame) game ).getNbLifePacmans() );
             labelScore.setText( "Score " + ( (PacmanGame) game ).score() );
@@ -90,6 +107,60 @@ public class ViewGame extends JFrame implements View, KeyListener {
             panelPacmanGame.setGhosts_pos( ( (PacmanGame) game ).positionGhosts() );
 
             Winner winner = ( (PacmanGame) game ).winner();
+            if ( !reset && winner != Winner.NOWINNER ) {
+                String print = "";
+                if ( winner == Winner.PACMANWINNER ) {
+                    print = "Les pacmans ont gagné";
+                } else if ( winner == Winner.GHOSTWINNER ) {
+                    print = "Les fantômes ont gagné";
+                }
+                int answer = JOptionPane.showConfirmDialog( this,
+                        print + "\nRelancer ?", "Fin de partie", JOptionPane.YES_NO_OPTION );
+                if ( answer == JOptionPane.YES_OPTION ) {
+                    reset = true;
+                    gameController.restart();
+                } else {
+                    System.exit( NORMAL );
+                }
+            } else
+                reset = false;
+        }
+
+        if ( game instanceof PacmanGameServeur ) {
+            labelLife.setText( "Vie " + ( (PacmanGameServeur) game ).getNbLifePacmans() );
+            labelScore.setText( "Score " + ( (PacmanGameServeur) game ).score() );
+            panelPacmanGame.setGhostsScarred( ( (PacmanGameServeur) game ).ghostsScarred() );
+            panelPacmanGame.setPacmans_pos( ( (PacmanGameServeur) game ).positionPacmans() );
+            panelPacmanGame.setGhosts_pos( ( (PacmanGameServeur) game ).positionGhosts() );
+
+            Winner winner = ( (PacmanGameServeur) game ).winner();
+            if ( !reset && winner != Winner.NOWINNER ) {
+                String print = "";
+                if ( winner == Winner.PACMANWINNER ) {
+                    print = "Les pacmans ont gagné";
+                } else if ( winner == Winner.GHOSTWINNER ) {
+                    print = "Les fantômes ont gagné";
+                }
+                int answer = JOptionPane.showConfirmDialog( this,
+                        print + "\nRelancer ?", "Fin de partie", JOptionPane.YES_NO_OPTION );
+                if ( answer == JOptionPane.YES_OPTION ) {
+                    reset = true;
+                    gameController.restart();
+                } else {
+                    System.exit( NORMAL );
+                }
+            } else
+                reset = false;
+        }
+
+        if ( game instanceof PacmanGameClient ) {
+            labelLife.setText( "Vie " + ( (PacmanGameClient) game ).getNbLifePacmans() );
+            labelScore.setText( "Score " + ( (PacmanGameClient) game ).score() );
+            panelPacmanGame.setGhostsScarred( ( (PacmanGameClient) game ).ghostsScarred() );
+            panelPacmanGame.setPacmans_pos( ( (PacmanGameClient) game ).positionPacmans() );
+            panelPacmanGame.setGhosts_pos( ( (PacmanGameClient) game ).positionGhosts() );
+
+            Winner winner = ( (PacmanGameClient) game ).winner();
             if ( !reset && winner != Winner.NOWINNER ) {
                 String print = "";
                 if ( winner == Winner.PACMANWINNER ) {

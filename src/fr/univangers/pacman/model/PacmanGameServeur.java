@@ -1,6 +1,7 @@
 package fr.univangers.pacman.model;
 
 import java.io.File;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -22,7 +23,7 @@ import fr.univangers.pacman.model.PositionAgent.Dir;
  * différents scores et agents ainsi que leur position
  */
 
-public class PacmanGameClient extends Game {
+public class PacmanGameServeur extends Game {
 
     private static final long   serialVersionUID = 998416452804755455L;
     private static final int    nbVieMax         = 3;
@@ -41,6 +42,7 @@ public class PacmanGameClient extends Game {
     private StrategyPacman      strategyPacman;
     private StrategyGhost       strategyGhost;
     private Winner              winner;
+    private PrintWriter         sortie;
 
     public int getNbLifePacmans() {
         return nbLifePacmans;
@@ -94,25 +96,20 @@ public class PacmanGameClient extends Game {
         return ghostsScarred;
     }
 
-    public PacmanGameClient( int maxTurn, Maze maze,
-            StrategyPacman strategyPacman2,
-            StrategyGhost strategyGhost2,
-            Mode mode2 ) {
+    public PacmanGameServeur( int maxTurn, Maze maze, StrategyPacman strategyPacman, StrategyGhost strategyGhost,
+            Mode mode, PrintWriter sortie ) {
         super( maxTurn );
         this.maze = maze;
-        this.strategyPacman = strategyPacman2;
-        this.strategyGhost = strategyGhost2;
-        this.mode = mode2;
+        this.strategyPacman = strategyPacman;
+        this.strategyGhost = strategyGhost;
+        this.mode = mode;
         this.winner = Winner.NOWINNER;
         this.nbLifePacmans = nbVieMax;
+        this.sortie = sortie;
         init();
     }
 
     private void updatePosition() {
-        /**
-         * des choses a faire ici mais pas forçement on va peut être recrée une
-         * fonction update serveur
-         */
         positionPacmans.clear();
         for ( Agent pacman : pacmans ) {
             if ( !pacman.isDeath() )
@@ -130,7 +127,11 @@ public class PacmanGameClient extends Game {
                     positionFoods.add( new PositionAgent( x, y ) );
             }
         }
+
         notifyViews();
+
+        // sortie.println( "test" );
+        // sortie.flush();
     }
 
     public void movePacmanPlayer1( Dir dir ) {
@@ -290,9 +291,42 @@ public class PacmanGameClient extends Game {
      */
 
     public void takeTurn() {
-        
+        /**
+         * il y a des choses a faire ici
+         */
+        for ( Agent pacman : pacmans ) {
+            moveAgent( pacman );
+            deadAgents( pacman );
+            if ( maze.isFoods( pacman.position().getX(), pacman.position().getY() ) ) {
+                maze.setFoods( pacman.position().getX(), pacman.position().getY(), false );
+                score += 10;
+                nbFood--;
+                playSound( "res/sounds/pacman_chomp.wav" );
+            }
+            if ( maze.isCapsule( pacman.position().getX(), pacman.position().getY() ) ) {
+                maze.setCapsule( pacman.position().getX(), pacman.position().getY(), false );
+                for ( Agent ghost : ghosts ) {
+                    ghost.vulnerability();
+                }
+                score += 50;
+                nbFood--;
+                playSound( "res/sounds/pacman_extrapac.wav" );
+            }
+        }
+
         updatePosition();
 
+        for ( Agent ghost : ghosts ) {
+            moveAgent( ghost );
+            deadAgents( ghost );
+        }
+        isOver();
+
+        updatePosition();
+        /**
+         * rajouter un update serveur qui mets a jour en fonction de ce cas
+         * reçus le serveur
+         */
     }
 
     @Override
