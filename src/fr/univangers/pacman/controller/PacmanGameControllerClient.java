@@ -1,6 +1,8 @@
 package fr.univangers.pacman.controller;
 
+import java.io.BufferedReader;
 import java.io.PrintWriter;
+import java.net.Socket;
 
 import fr.univangers.pacman.model.PacmanGameClient;
 import fr.univangers.pacman.model.PositionAgent.Dir;
@@ -26,9 +28,12 @@ public class PacmanGameControllerClient implements GameController {
         this.pacmanGame = pacmanGame;
     }
 
-    public PacmanGameControllerClient( PacmanGameClient pacmanGame, PrintWriter sortie ) {
+    public PacmanGameControllerClient( PacmanGameClient pacmanGame, PrintWriter sortie, Socket so,
+            BufferedReader entree ) {
         this.pacmanGame = pacmanGame;
         this.sortie = sortie;
+        Thread recevoirGame = new Thread( new PacmanGameControleurListener( so, entree, sortie, pacmanGame ) );
+        recevoirGame.start();
     }
 
     @Override
@@ -82,4 +87,5 @@ public class PacmanGameControllerClient implements GameController {
         sortie.println( mes );
         sortie.flush();
     }
+
 }

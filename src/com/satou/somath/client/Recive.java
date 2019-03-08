@@ -34,14 +34,9 @@ public class Recive implements Runnable {
                 }
                 switch ( st.nextToken() ) {
                 case "game":
-                    new ViewSettings( sortie );
+                    new ViewSettings( sortie, entree, so );
                     break;
-                case "gagne":
-                    // fin de partie avec victoire
-                    break;
-                case "perdu":
-                    // fin de partie avec défaite
-                    break;
+
                 case "Pseudo":
                     break;
                 case "Password":

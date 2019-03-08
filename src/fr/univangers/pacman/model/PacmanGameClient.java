@@ -290,7 +290,6 @@ public class PacmanGameClient extends Game {
      */
 
     public void takeTurn() {
-        
         updatePosition();
 
     }
@@ -369,6 +368,26 @@ public class PacmanGameClient extends Game {
         if ( nbFood == 0 ) {
             over();
         }
+    }
+
+    public void setPacman( List<Agent> pacmans, List<PositionAgent> pacmans_pos ) {
+        // TODO Auto-generated method stub
+        this.pacmans = pacmans;
+        this.positionPacmans = pacmans_pos;
+
+    }
+
+    public void setGhost( List<Agent> ghosts, List<PositionAgent> ghosts_pos ) {
+        // TODO Auto-generated method stub
+        this.ghosts = ghosts;
+        this.positionGhosts = ghosts_pos;
+
+    }
+
+    public void setFoods( List<PositionAgent> foods ) {
+        // TODO Auto-generated method stub
+        this.positionFoods = foods;
+
     }
 
 }

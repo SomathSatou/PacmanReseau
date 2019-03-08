@@ -1,7 +1,7 @@
 #!/bin/sh -x
 
-javac com/satou/somath/serveur/*.java
-javac com/satou/somath/client/*.java
+javac com/satou/somath/*/*.java
+javac fr/univangers/pacman/*/*.java
 
 gnome-terminal --geometry 103x25+37+52 -x 	java com.satou.somath.serveur.PacmanServeur
 gnome-terminal --geometry 103x25+978+52 -x 	java com.satou.somath.client.PacmanClient 
