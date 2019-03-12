@@ -109,6 +109,37 @@ public class PacmanGameServeur extends Game {
         init();
     }
 
+    private String etat() {
+        String state = "gamestate";
+        state += " P";
+        for ( Agent elt : pacmans ) {
+            state += " " + elt.position().getX() + " " + elt.position().getY();
+        }
+        state += " G";
+        for ( Agent elt : ghosts ) {
+            state += " " + elt.position().getX() + " " + elt.position().getY();
+        }
+        state += " F";
+        for ( PositionAgent elt : positionFoods ) {
+            state += " " + elt.getX() + " " + elt.getY();
+        }
+        state += " C";
+        for ( int x = 0; x < maze.getSizeX(); x++ ) {
+            for ( int y = 0; y < maze.getSizeY(); y++ ) {
+                if ( maze.isCapsule( x, y ) ) {
+                    state += " " + x + " " + y;
+                }
+            }
+        }
+        state += " S";
+        if ( ghosts.get( 0 ).isVulnerable() ) {
+            state += " 1";
+        } else {
+            state += " 0";
+        }
+        return state;
+    }
+
     private void updatePosition() {
         positionPacmans.clear();
         for ( Agent pacman : pacmans ) {
@@ -323,6 +354,9 @@ public class PacmanGameServeur extends Game {
         isOver();
 
         updatePosition();
+
+        sortie.println( etat() );
+        sortie.flush();
         /**
          * rajouter un update serveur qui mets a jour en fonction de ce cas
          * reçus le serveur

@@ -318,6 +318,7 @@ public class PacmanGame extends Game {
         }
         isOver();
 
+        System.out.println( "taketurn normal" );
         updatePosition();
         /**
          * rajouter un update serveur qui mets a jour en fonction de ce cas

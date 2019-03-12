@@ -8,8 +8,10 @@ import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.PrintWriter;
+import java.net.Socket;
 import java.util.Vector;
 
 import javax.swing.BorderFactory;
@@ -149,7 +151,7 @@ public class ViewSettings extends JFrame {
         setVisible( true );
     }
 
-    public ViewSettings( PrintWriter sortie ) {
+    public ViewSettings( PrintWriter sortie, BufferedReader entree, Socket so ) {
         super();
 
         setTitle( "Configuration" );
@@ -212,7 +214,8 @@ public class ViewSettings extends JFrame {
                 PacmanGameClient pacmanGame = new PacmanGameClient( getNbTurn(), getMaze(), getStrategyPacman(),
                         getStrategyGhost(),
                         getMode() );
-                PacmanGameControllerClient pacmanGameController = new PacmanGameControllerClient( pacmanGame, sortie );
+                PacmanGameControllerClient pacmanGameController = new PacmanGameControllerClient( pacmanGame, sortie,
+                        so, entree );
                 /**
                  * rajout méthode d'envoie des donnée d'initialisation coté
                  * serveur sendInitCS( getNbTurn(),
