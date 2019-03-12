@@ -1,11 +1,10 @@
 #!/bin/sh -x
 
-javac com/satou/somath/serveur/*.java
-javac com/satou/somath/client/*.java
+javac -cp ../lib/mysql-connector-java-8.0.15.jar com/satou/somath/*/*.java
+javac fr/univangers/pacman/*/*.java
 
-gnome-terminal --geometry 103x25+37+52 -x 	java com.satou.somath.serveur.PacmanServeur
+gnome-terminal --geometry 103x25+37+52 -x 	java -cp ../lib/mysql-connector-java-8.0.15.jar com.satou.somath.serveur.PacmanServeur
 gnome-terminal --geometry 103x25+978+52 -x 	java com.satou.somath.client.PacmanClient 
-gnome-terminal --geometry 103x25+978+550 -x 	java com.satou.somath.client.PacmanClient 
-#gnome-terminal --geometry 103x29+37+580 -x 	java client/PacmanClient 
-#gnome-terminal --geometry 103x29+978+580 -x 	java client/PacmanClient 
-
+#gnome-terminal --geometry 103x25+978+550 -x 	java com.satou.somath.client.PacmanClient 
+#gnome-terminal --geometry 103x29+37+580 -x 	java client/PacmanClient
+#gnome-terminal --geometry 103x29+978+580 -x 	java client/PacmanClient

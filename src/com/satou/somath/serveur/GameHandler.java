@@ -7,6 +7,9 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 
+import com.satou.somath.dao.DAOFactory;
+import com.satou.somath.dao.UserDao;
+
 import fr.univangers.pacman.model.Game;
 import fr.univangers.pacman.model.PositionAgent;
 
@@ -22,12 +25,14 @@ public class GameHandler extends Thread {
     private String                 pseudo;
     private String                 login;
     private Game                   _jeu;
-
-    public GameHandler( Socket so, ArrayList<GameHandler> listeClient ) {
+    private DAOFactory             daoFactory;
+    
+    public GameHandler( Socket so, ArrayList<GameHandler> listeClient, DAOFactory daofactory ) {
         // TODO Auto-generated constructor stub
         _id = ID++;
         _listeClient = listeClient;
         _so = so;
+        daoFactory = daofactory;
         try {
             entree = new BufferedReader( new InputStreamReader( _so.getInputStream() ) );
             sortie = new PrintWriter( _so.getOutputStream() );
@@ -38,19 +43,24 @@ public class GameHandler extends Thread {
     }
 
     public void run() {
-        // TODO Auto-generated method stub
-        System.out.println( "je commence le thread" );
-        sortie.println( "Pseudo :" );
-        sortie.flush();
-        try {
-            pseudo = entree.readLine();
-            sortie.println( "Password :" );
-            sortie.flush();
-            login = entree.readLine();
-        } catch ( IOException e ) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+    	// TODO Auto-generated method stub
+    	System.out.println( "je commence le thread" );
+
+    	UserDao userDao = daoFactory.getUserDao();
+
+    	do {
+    		sortie.println( "Pseudo :" );
+    		sortie.flush();
+    		try {
+    			pseudo = entree.readLine();
+    			sortie.println( "Password :" );
+    			sortie.flush();
+    			login = entree.readLine();
+    		} catch ( IOException e ) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		}
+    	}while(/*!userDao.identification(pseudo, login)*/ false);
 
         System.out.println( "ce client est " + pseudo + " sont mdp est " + login );
         /***
