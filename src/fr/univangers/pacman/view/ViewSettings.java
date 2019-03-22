@@ -23,6 +23,7 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 
+import com.satou.somath.dao.GameInformation;
 import com.satou.somath.definition.Mode;
 import com.satou.somath.definition.StrategyGhost;
 import com.satou.somath.definition.StrategyPacman;
@@ -50,6 +51,7 @@ public class ViewSettings extends JFrame {
     private JSpinner          nbTurn;
     private JComboBox<String> listStrategyPacman;
     private JComboBox<String> listStrategyGhost;
+    private GameInformation   gameInformation;
 
     public ViewSettings() {
         super();
@@ -112,7 +114,7 @@ public class ViewSettings extends JFrame {
                  * modifier pour que le lancement ce fasse sur le serveur.
                  */
                 PacmanGame pacmanGame = new PacmanGame( getNbTurn(), getMaze(), getStrategyPacman(), getStrategyGhost(),
-                        getMode() );
+                        getMode());
                 PacmanGameController pacmanGameController = new PacmanGameController( pacmanGame );
                 /**
                  * rajout méthode d'envoie des donnée d'initialisation coté

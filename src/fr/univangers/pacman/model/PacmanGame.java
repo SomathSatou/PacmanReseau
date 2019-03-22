@@ -9,6 +9,7 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
+import com.satou.somath.dao.GameInformation;
 import com.satou.somath.definition.Mode;
 import com.satou.somath.definition.StrategyGhost;
 import com.satou.somath.definition.StrategyPacman;
@@ -328,7 +329,7 @@ public class PacmanGame extends Game {
 
     @Override
     public void gameOver() {
-        if ( nbFood == 0 ) {
+		if ( nbFood == 0 ) {
             winner = Winner.PACMANWINNER;
             playSound( "res/sounds/pacman_intermission.wav" );
             notifyViews();

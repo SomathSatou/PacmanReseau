@@ -29,6 +29,7 @@ public class Maze implements Serializable{
 	private boolean foods[][];
 	private boolean capsules_start[][];
 	private boolean capsules[][];
+	private String mazename;
 
 	/** 
 	 * Les positions initiales des agents
@@ -101,12 +102,16 @@ public class Maze implements Serializable{
 			for(y=0;y<size_y;y++) if (!walls[size_x-1][y]) throw new Exception("Wrong input format: the maze must be closed");
 			System.out.println("### Maze loaded.");
 			
+			this.mazename=filename;
+			
 		}		
 		catch (Exception e){
 			e.printStackTrace();
 			throw new Exception("Probleme a la lecture du fichier: "+e.getMessage());
 		}
 	}
+	
+	public String getMazeName() {return(mazename);}
 	
 	/**
 	 * Renvoie la taille X du labyrtinhe

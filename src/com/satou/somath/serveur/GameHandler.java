@@ -8,6 +8,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 import com.satou.somath.dao.DAOFactory;
+import com.satou.somath.dao.GameInformation;
 import com.satou.somath.dao.UserDao;
 
 import fr.univangers.pacman.model.Game;
@@ -47,6 +48,7 @@ public class GameHandler extends Thread {
     	System.out.println( "je commence le thread" );
 
     	UserDao userDao = daoFactory.getUserDao();
+    	GameInformation gameInformation = new GameInformation(daoFactory);
 
     	do {
     		sortie.println( "Pseudo :" );
@@ -60,15 +62,16 @@ public class GameHandler extends Thread {
     			// TODO Auto-generated catch block
     			e.printStackTrace();
     		}
-    	}while(/*!userDao.identification(pseudo, login)*/ false);
+    	}while(!userDao.identification(pseudo, login));
 
         System.out.println( "ce client est " + pseudo + " sont mdp est " + login );
+        gameInformation.setJoueur(pseudo);
         /***
          * envoie message de lancement de l'interface de jeux
          */
         sortie.println( "game" );
         sortie.flush();
-        Thread recevoir = new Thread( new ReciveServeur( _so, entree, sortie ) );
+        Thread recevoir = new Thread( new ReciveServeur( _so, entree, sortie, gameInformation ) );
         recevoir.start();
         while ( !_so.isClosed() ) {
 

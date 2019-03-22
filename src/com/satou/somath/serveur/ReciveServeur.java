@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.StringTokenizer;
 
+import com.satou.somath.dao.GameInformation;
 import com.satou.somath.definition.Mode;
 import com.satou.somath.definition.StrategyGhost;
 import com.satou.somath.definition.StrategyPacman;
@@ -21,13 +22,15 @@ public class ReciveServeur implements Runnable {
     final Socket         so;
     final BufferedReader entree;
     final PrintWriter    sortie;
+    private GameInformation gameInformation;
     // le jeux panmangame a terme mais pacmanwiew en attendant
 
-    public ReciveServeur( Socket so2, BufferedReader entree2, PrintWriter sortie2 ) {
+    public ReciveServeur( Socket so2, BufferedReader entree2, PrintWriter sortie2, GameInformation gameInformation ) {
         // TODO Auto-generated constructor stub
         this.so = so2;
         this.entree = entree2;
         this.sortie = sortie2;
+        this.gameInformation = gameInformation;
     }
 
     @Override
@@ -38,7 +41,7 @@ public class ReciveServeur implements Runnable {
         try {
             pacmanGame = new PacmanGameServeur( 200, new Maze( directory.listFiles()[0].toString() ),
                     StrategyPacman.BASIC, StrategyGhost.TRACKING,
-                    Mode.ONEPLAYER, sortie );
+                    Mode.ONEPLAYER, sortie, this.gameInformation );
 
             while ( so.isConnected() ) {
                 msg = entree.readLine();
