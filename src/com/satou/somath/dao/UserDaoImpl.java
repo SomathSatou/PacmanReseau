@@ -5,10 +5,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-
-import com.satou.webAvancee.model.Utilisateur;
-import com.satou.webAvancee.dao.DAOUtilitaire;;
 
 public class UserDaoImpl implements UserDao {
 	
@@ -18,9 +14,30 @@ public class UserDaoImpl implements UserDao {
         this.daoFactory = daoFactory;
     }
 
+    private static final String SQL_SELECT = "SELECT pseudo, mot_de_passe FROM User WHERE pseudo = ? AND mot_de_passe = ?";
 	@Override
 	public boolean identification(String Pseudo, String mdp) throws DAOException {
-		// TODO Auto-generated method stub
-		return false;
+		Connection connexion = null;
+	    PreparedStatement preparedStatement = null;
+	    ResultSet resultSet = null;
+	    
+	    boolean flag = false;
+	    
+	    try {
+	        /* Récupération d'une connexion depuis la Factory */
+	        connexion = daoFactory.getConnection();
+	        preparedStatement = DAOUtilitaire.initialisationRequetePreparee( connexion, SQL_SELECT, false, Pseudo, mdp );
+	        resultSet = preparedStatement.executeQuery();
+	        /* Parcours de la ligne de données des éventuel ResulSet retourné */
+	        if ( resultSet.next() ) {
+	            flag = true;
+	        }
+	    } catch ( SQLException e ) {
+	        throw new DAOException( e );
+	    } finally {
+	        DAOUtilitaire.fermeturesSilencieuses( resultSet, preparedStatement, connexion );
+	    }
+
+	    return flag;
 	}
 }

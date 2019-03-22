@@ -5,13 +5,19 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
+import com.satou.somath.dao.DAOFactory;
+
 public class PacmanServeur {
     public static ArrayList<GameHandler> listeClient = new ArrayList<>();
 
     public static void main( String arg[] ) {
+    	System.out.println("debug1");
+    	
         int p = 5002; // le port d’écoute
         final ServerSocket ecoute;
         Socket so;
+        
+        DAOFactory daoFactory = DAOFactory.getInstance();
 
         try {
             ecoute = new ServerSocket( p ); // on crée le serveur
@@ -21,7 +27,7 @@ public class PacmanServeur {
                 so = ecoute.accept();
                 // lancement du thread des clients
                 System.out.println( "connexion d'un nouveau client" );
-                GameHandler ch = new GameHandler( so, listeClient );
+                GameHandler ch = new GameHandler( so, listeClient, daoFactory );
                 listeClient.add( ch );
                 ch.start();
             }

@@ -10,6 +10,7 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
+import com.satou.somath.dao.GameInformation;
 import com.satou.somath.definition.Mode;
 import com.satou.somath.definition.StrategyGhost;
 import com.satou.somath.definition.StrategyPacman;
@@ -43,6 +44,8 @@ public class PacmanGameServeur extends Game {
     private StrategyGhost       strategyGhost;
     private Winner              winner;
     private PrintWriter         sortie;
+
+    private GameInformation gameInformation;
 
     public int getNbLifePacmans() {
         return nbLifePacmans;
@@ -97,7 +100,7 @@ public class PacmanGameServeur extends Game {
     }
 
     public PacmanGameServeur( int maxTurn, Maze maze, StrategyPacman strategyPacman, StrategyGhost strategyGhost,
-            Mode mode, PrintWriter sortie ) {
+            Mode mode, PrintWriter sortie, GameInformation gameInformation ) {
         super( maxTurn );
         this.maze = maze;
         this.strategyPacman = strategyPacman;
@@ -106,6 +109,7 @@ public class PacmanGameServeur extends Game {
         this.winner = Winner.NOWINNER;
         this.nbLifePacmans = nbVieMax;
         this.sortie = sortie;
+        this.gameInformation = gameInformation;
         init();
     }
 
@@ -369,11 +373,16 @@ public class PacmanGameServeur extends Game {
             winner = Winner.PACMANWINNER;
             playSound( "res/sounds/pacman_intermission.wav" );
             notifyViews();
+            gameInformation.setResultat("G");
         } else {
             winner = Winner.GHOSTWINNER;
             playSound( "res/sounds/pacman_death.wav" );
             notifyViews();
+            gameInformation.setResultat("P");
         }
+        gameInformation.setMap(this.maze.getMazeName());
+        gameInformation.setScore(this.score);
+        gameInformation.enrengistrerPartie();
     }
 
     /**
