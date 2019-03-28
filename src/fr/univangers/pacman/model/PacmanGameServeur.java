@@ -369,20 +369,24 @@ public class PacmanGameServeur extends Game {
 
     @Override
     public void gameOver() {
+    	System.out.println("Fin du jeu");
         if ( nbFood == 0 ) {
+            gameInformation.setResultat("G");
+            gameInformation.setMap(this.maze.getMazeName());
+            gameInformation.setScore(this.score);
+            gameInformation.enrengistrerPartie();
             winner = Winner.PACMANWINNER;
             playSound( "res/sounds/pacman_intermission.wav" );
             notifyViews();
-            gameInformation.setResultat("G");
         } else {
+            gameInformation.setResultat("P");
+            gameInformation.setMap(this.maze.getMazeName());
+            gameInformation.setScore(this.score);
+            gameInformation.enrengistrerPartie();
             winner = Winner.GHOSTWINNER;
             playSound( "res/sounds/pacman_death.wav" );
             notifyViews();
-            gameInformation.setResultat("P");
         }
-        gameInformation.setMap(this.maze.getMazeName());
-        gameInformation.setScore(this.score);
-        gameInformation.enrengistrerPartie();
     }
 
     /**
