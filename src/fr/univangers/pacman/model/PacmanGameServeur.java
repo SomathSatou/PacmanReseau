@@ -45,7 +45,7 @@ public class PacmanGameServeur extends Game {
     private Winner              winner;
     private PrintWriter         sortie;
 
-    private GameInformation gameInformation;
+    private GameInformation     gameInformation;
 
     public int getNbLifePacmans() {
         return nbLifePacmans;
@@ -136,11 +136,14 @@ public class PacmanGameServeur extends Game {
             }
         }
         state += " S";
-        if ( ghosts.get( 0 ).isVulnerable() ) {
-            state += " 1";
-        } else {
-            state += " 0";
+        if ( ghosts.size() > 0 ) {
+            if ( ghosts.get( 0 ).isVulnerable() ) {
+                state += " 1";
+            } else {
+                state += " 0";
+            }
         }
+        state += " FIN";
         return state;
     }
 
@@ -373,15 +376,15 @@ public class PacmanGameServeur extends Game {
             winner = Winner.PACMANWINNER;
             playSound( "res/sounds/pacman_intermission.wav" );
             notifyViews();
-            gameInformation.setResultat("G");
+            gameInformation.setResultat( "G" );
         } else {
             winner = Winner.GHOSTWINNER;
             playSound( "res/sounds/pacman_death.wav" );
             notifyViews();
-            gameInformation.setResultat("P");
+            gameInformation.setResultat( "P" );
         }
-        gameInformation.setMap(this.maze.getMazeName());
-        gameInformation.setScore(this.score);
+        gameInformation.setMap( this.maze.getMazeName() );
+        gameInformation.setScore( this.score );
         gameInformation.enrengistrerPartie();
     }
 

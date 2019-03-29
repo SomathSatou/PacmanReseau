@@ -23,6 +23,7 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 
+import com.satou.somath.client.Recive;
 import com.satou.somath.dao.GameInformation;
 import com.satou.somath.definition.Mode;
 import com.satou.somath.definition.StrategyGhost;
@@ -114,7 +115,7 @@ public class ViewSettings extends JFrame {
                  * modifier pour que le lancement ce fasse sur le serveur.
                  */
                 PacmanGame pacmanGame = new PacmanGame( getNbTurn(), getMaze(), getStrategyPacman(), getStrategyGhost(),
-                        getMode());
+                        getMode() );
                 PacmanGameController pacmanGameController = new PacmanGameController( pacmanGame );
                 /**
                  * rajout méthode d'envoie des donnée d'initialisation coté
@@ -153,7 +154,7 @@ public class ViewSettings extends JFrame {
         setVisible( true );
     }
 
-    public ViewSettings( PrintWriter sortie, BufferedReader entree, Socket so ) {
+    public ViewSettings( PrintWriter sortie, BufferedReader entree, Socket so, Recive ref ) {
         super();
 
         setTitle( "Configuration" );
@@ -218,18 +219,15 @@ public class ViewSettings extends JFrame {
                         getMode() );
                 PacmanGameControllerClient pacmanGameController = new PacmanGameControllerClient( pacmanGame, sortie,
                         so, entree );
-                /**
-                 * rajout méthode d'envoie des donnée d'initialisation coté
-                 * serveur sendInitCS( getNbTurn(),
-                 * ((File)listMaze.getSelectedItem() ).getPath() ,
-                 * listStrategyGhost.getSelectedIndex() ,
-                 * listStrategyPacman.getSelectedIndex() ,
-                 * listMode.getSelectedIndex() )
-                 */
+
                 ViewCommande viewCommande = new ViewCommande( pacmanGame );
                 viewCommande.setGameController( pacmanGameController );
                 new ViewGame( pacmanGame, pacmanGameController, getMaze(), "Pacman" );
-                sortie.println( "game" );
+                ref.set( pacmanGame );
+
+                sortie.println( "game " + getNbTurn() + " " + ( (File) listMaze.getSelectedItem() ).getPath() + " "
+                        + listStrategyGhost.getSelectedIndex() + " " + listStrategyPacman.getSelectedIndex() + " "
+                        + listMode.getSelectedIndex() );
                 sortie.flush();
                 setVisible( false );
             }
@@ -247,7 +245,7 @@ public class ViewSettings extends JFrame {
         JLabel labelPreview = new JLabel( "Menu" );
         labelPreview.setFont( new Font( Font.SANS_SERIF, Font.PLAIN, 25 ) );
         labelPreview.setHorizontalAlignment( (int) JLabel.CENTER_ALIGNMENT );
-        ;
+
         add( labelPreview, BorderLayout.PAGE_START );
 
         add( panelPreview, BorderLayout.CENTER );
