@@ -31,6 +31,9 @@ public class GameInformation {
 	public void enrengistrerPartie() {
 		GameDao gameDao = daoFactory.getGameDao();
 		
+		String[] _map=map.split("/");
+		map=_map[_map.length-1];
+		
 		if(map.length()>40) {
 			map = map.substring(map.length()-40);
 		}
