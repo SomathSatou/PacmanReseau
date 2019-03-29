@@ -32,8 +32,6 @@ public class PacmanGameControllerClient implements GameController {
             BufferedReader entree ) {
         this.pacmanGame = pacmanGame;
         this.sortie = sortie;
-        Thread recevoirGame = new Thread( new PacmanGameControleurListener( so, entree, sortie, pacmanGame ) );
-        recevoirGame.start();
     }
 
     @Override

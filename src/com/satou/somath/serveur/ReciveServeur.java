@@ -18,10 +18,10 @@ import fr.univangers.pacman.model.PositionAgent.Dir;
 import fr.univangers.pacman.view.ViewGame;
 
 public class ReciveServeur implements Runnable {
-    String               msg;
-    final Socket         so;
-    final BufferedReader entree;
-    final PrintWriter    sortie;
+    String                  msg;
+    final Socket            so;
+    final BufferedReader    entree;
+    final PrintWriter       sortie;
     private GameInformation gameInformation;
     // le jeux panmangame a terme mais pacmanwiew en attendant
 
@@ -57,12 +57,61 @@ public class ReciveServeur implements Runnable {
                  * 
                  */
                 case "game":
-                    /*
-                     * pacmanGame = new PacmanGame( 200, new Maze(
-                     * directory.listFiles()[0].toString() ),
-                     * StrategyPacman.BASIC, StrategyGhost.TRACKING,
-                     * Mode.ONEPLAYER );
-                     */
+                    int nbrTour = Integer.parseInt( st.nextToken() );
+                    String path = st.nextToken();
+                    StrategyPacman StratP;
+                    switch ( st.nextToken() ) {
+                    case "0":
+                        StratP = StrategyPacman.ASTAR;
+                        break;
+                    case "1":
+                        StratP = StrategyPacman.BASIC;
+                        break;
+                    case "2":
+                        StratP = StrategyPacman.RANDOM;
+                        break;
+                    default:
+                        StratP = StrategyPacman.NONE;
+                        break;
+                    }
+                    StrategyGhost StratG;
+                    switch ( st.nextToken() ) {
+                    case "0":
+                        StratG = StrategyGhost.ASTAR;
+                        break;
+                    case "1":
+                        StratG = StrategyGhost.TRACKING;
+                        break;
+                    case "2":
+                        StratG = StrategyGhost.BASIC;
+                        break;
+                    case "3":
+                        StratG = StrategyGhost.RANDOM;
+                        break;
+                    default:
+                        StratG = StrategyGhost.NONE;
+                        break;
+                    }
+
+                    Mode mode;
+                    switch ( st.nextToken() ) {
+                    case "1":
+                        mode = Mode.AUTO;
+                        break;
+                    case "2":
+                        mode = Mode.TWOPLAYERC;
+                        break;
+                    case "3":
+                        mode = Mode.TWOPLAYERO;
+                        break;
+                    default:
+                        mode = Mode.ONEPLAYER;
+                        break;
+                    }
+                    System.out.println( path );
+                    pacmanGame = new PacmanGameServeur( nbrTour, new Maze( path ),
+                            StratP, StratG,
+                            mode, sortie, gameInformation );
 
                     PacmanGameControllerServeur pacmanGameController = new PacmanGameControllerServeur( pacmanGame,
                             sortie );
@@ -75,7 +124,7 @@ public class ReciveServeur implements Runnable {
                      * listMode.getSelectedIndex() )
                      */
                     new ViewGame( pacmanGame, pacmanGameController,
-                            new Maze( directory.listFiles()[0].toString() ), "PacmanServeur" );
+                            new Maze( path ), "PacmanServeur" );
                     break;
 
                 case "gauche":

@@ -108,6 +108,11 @@ public class PacmanGameClient extends Game {
         init();
     }
 
+    public PacmanGameClient( int i ) {
+        super( i );
+        // TODO Auto-generated constructor stub
+    }
+
     private void updatePosition() {
         /**
          * des choses a faire ici mais pas forçement on va peut être recrée une
@@ -386,7 +391,11 @@ public class PacmanGameClient extends Game {
 
     public void setFoods( List<PositionAgent> foods ) {
         // TODO Auto-generated method stub
-        this.positionFoods = foods;
+        boolean foodsNew[][] = new boolean[maze.getSizeX()][maze.getSizeY()];
+        for ( PositionAgent elt : foods ) {
+            foodsNew[elt.getX()][elt.getY()] = true;
+        }
+        maze.setFoods( foodsNew );
 
     }
 

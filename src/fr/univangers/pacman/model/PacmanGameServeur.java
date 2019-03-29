@@ -45,7 +45,7 @@ public class PacmanGameServeur extends Game {
     private Winner              winner;
     private PrintWriter         sortie;
 
-    private GameInformation gameInformation;
+    private GameInformation     gameInformation;
 
     public int getNbLifePacmans() {
         return nbLifePacmans;
@@ -136,11 +136,14 @@ public class PacmanGameServeur extends Game {
             }
         }
         state += " S";
-        if ( ghosts.get( 0 ).isVulnerable() ) {
-            state += " 1";
-        } else {
-            state += " 0";
+        if ( ghosts.size() > 0 ) {
+            if ( ghosts.get( 0 ).isVulnerable() ) {
+                state += " 1";
+            } else {
+                state += " 0";
+            }
         }
+        state += " FIN";
         return state;
     }
 
