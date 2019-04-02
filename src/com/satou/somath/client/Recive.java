@@ -58,11 +58,16 @@ public class Recive implements Runnable {
                         List<PositionAgent> pacmans_pos = new ArrayList<PositionAgent>();
                         List<PositionAgent> ghosts_pos = new ArrayList<PositionAgent>();
                         List<PositionAgent> foods = new ArrayList<PositionAgent>();
+                        List<PositionAgent> caps = new ArrayList<PositionAgent>();
+
                         if ( tmp.equalsIgnoreCase( "P" ) ) {
                             tmp = st.nextToken();
                             while ( !tmp.equalsIgnoreCase( "G" ) && !tmp.equalsIgnoreCase( "FIN" ) ) {
                                 int x = Integer.parseInt( tmp );
                                 int y = Integer.parseInt( st.nextToken() );
+                                /*
+                                 * switch(st.nextToken()) { case " }
+                                 */
                                 PositionAgent postmp = new PositionAgent( x, y );
                                 Agent ageTmp = new Agent( Type.PACMAN, postmp );
                                 pacmans.add( ageTmp );
@@ -89,6 +94,21 @@ public class Recive implements Runnable {
                                 tmp = st.nextToken();
                             }
                             pacmanGame.setFoods( foods );
+                            tmp = st.nextToken();
+                            while ( !tmp.equalsIgnoreCase( "FIN" ) && !tmp.equalsIgnoreCase( "S" ) ) {
+                                int x = Integer.parseInt( tmp );
+                                int y = Integer.parseInt( st.nextToken() );
+                                PositionAgent postmp = new PositionAgent( x, y );
+                                caps.add( postmp );
+                                tmp = st.nextToken();
+                            }
+                            pacmanGame.setCaps( caps );
+                            tmp = st.nextToken();
+                            if ( !tmp.equalsIgnoreCase( "1" ) ) {
+                                pacmanGame.setScared( false );
+                            } else
+                                pacmanGame.setScared( true );
+                            ;
                         }
 
                     } while ( tmp == "FIN" );

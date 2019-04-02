@@ -399,4 +399,23 @@ public class PacmanGameClient extends Game {
 
     }
 
+    public void setCaps( List<PositionAgent> caps ) {
+        // TODO Auto-generated method stub
+        boolean CapsNew[][] = new boolean[maze.getSizeX()][maze.getSizeY()];
+        for ( PositionAgent elt : caps ) {
+            CapsNew[elt.getX()][elt.getY()] = true;
+        }
+        maze.setCaps( CapsNew );
+
+    }
+
+    public void setScared( boolean b ) {
+        // TODO Auto-generated method stub
+        if ( b ) {
+            for ( Agent ghost : ghosts ) {
+                ghost.vulnerability();
+            }
+        }
+    }
+
 }

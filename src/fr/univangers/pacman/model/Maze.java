@@ -232,4 +232,10 @@ public class Maze implements Serializable {
         this.ghosts_start = ghosts_start;
     }
 
+    public void setCaps( boolean[][] capsNew ) {
+        // TODO Auto-generated method stub
+        this.capsules = capsNew;
+
+    }
+
 }
