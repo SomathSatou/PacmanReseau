@@ -25,7 +25,8 @@ public class GameDaoImpl implements GameDao {
 	    try {
 	        /* Récupération d'une connexion depuis la Factory */
 	        connexion = daoFactory.getConnection();
-	        preparedStatement = DAOUtilitaire.initialisationRequetePreparee( connexion, SQL_INSERT, true, map, joueur, resultat, score );
+	        java.sql.Date sqlDate = new java.sql.Date(new java.util.Date().getTime());
+	        preparedStatement = DAOUtilitaire.initialisationRequetePreparee( connexion, SQL_INSERT, true, map, joueur, resultat, score, sqlDate );
 	        int statut = preparedStatement.executeUpdate();
 	        /* Analyse du statut retourné par la requête d'insertion */
 	        if ( statut == 0 ) {
